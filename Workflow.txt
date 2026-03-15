@@ -1,0 +1,117 @@
+
+Model Building:
+===============
+
+1. Dataset Collection
+	- CT and MRI scan 
+	- Dataset Link : https://www.kaggle.com/datasets/murtozalikhon/brain-tumor-multimodal-image-ct-and-mri
+
+2. Image Preprocessing
+	- converted to grayscale 
+	- resized to 128 × 128 
+
+3. CT–MRI Image Fusion
+	- For each class, corresponding CT and MRI images are fused using weighted pixel-level fusion.
+   	- Fusion formula:
+   		Fused Image = 0.5 × CT Image + 0.5 × MRI Image
+   	- The fused images converted RGB format and store fused_dataset directory.
+
+4. Dataset Preparation
+	- loaded image_dataset_from_directory method.
+	- split into train(80%) and val(20%).
+   	- Images are preprocessed using vgg16 preprocessing functions.
+
+5. Exploratory Data Analysis
+   	- Class distribution
+   	- Sample images
+
+6. Feature Learning and Model Training
+   Multiple deep learning models are trained using fused images:
+	- Custom CNN
+	- VGG16 (Transfer Learning)
+	- ResNet50 (Transfer Learning)
+	- Xception (Transfer Learning)
+7. Model Optimization
+   	- Adam optimizer is used with a low learning rate.
+  	- Early Stopping is applied to prevent overfitting.
+   	- ReduceLROnPlateau dynamically reduces learning rate during training.
+
+8. Model Evaluation
+	- Metrics : Accuracy, Precision, Recall, F1-score
+	- Confusion Matrix
+	- ROC Curve
+	- Training Accuracy and Loss graphs
+
+9. Model Comparison
+	- Compare the all trained model using tabular and Graphs
+
+10. Model Saving
+
+11. Explainability using Grad-CAM
+    	- Grad-CAM is applied to the CNN model to highlight important regions influencing the prediction.
+    	- Heatmaps are generated and overlaid on fused images for visual interpretation.
+
+Flask Web application: (Prediction)
+==================================
+
+1. User Authentication
+	- User registration (Signup) with validation
+	- User login (Signin) with session management
+	- Admin authentication (admin/admin credentials)
+
+2. Image Upload and Patient Information
+	- Upload CT scan image
+	- Upload MRI image
+	- Collect patient details (Name, Age, Gender, Patient ID)
+	- Validate patient ID uniqueness in database
+
+3. Image Processing Pipeline
+	- Save uploaded CT and MRI images with timestamp
+	- Resize images to 128 × 128 pixels
+	- Convert images to grayscale
+	- Apply CT-MRI fusion using weighted pixel-level fusion (0.5 × CT + 0.5 × MRI)
+	- Convert fused image to RGB format
+	- Preprocess using VGG16 preprocessing functions
+
+4. Model Prediction
+	- Load pre-trained model
+	- Generate prediction on fused image
+	- Calculate confidence score
+	- Classify as "Healthy" or "Tumor"
+
+5. Grad-CAM Visualization
+	- Generate Grad-CAM heatmap highlighting important regions
+	- Create overlay visualization (fused image + heatmap)
+	- Save all generated images (fused, heatmap, overlay) to static/results directory
+
+6. Result Display
+	- Display prediction result and confidence score
+	- Show patient information card
+	- Display three analysis images (Fused, Heatmap, Overlay)
+	- Provide recommendations and precautions based on prediction
+	- Generate PDF report option
+
+7. Database Storage
+	- Store prediction results in SQLite database (signup.db)
+	- Save patient details, prediction, confidence, and image paths
+	- Record timestamp for each prediction
+	- Link predictions to user accounts
+
+8. History Management
+	- View user's prediction history
+	- Display all previous predictions with images
+	- Access individual prediction details
+	- Filter by user account
+
+9. Admin Dashboard
+	- View all registered users
+	- Display statistics (Total Users, Total Predictions, Healthy Cases, Tumor Cases)
+	- Access individual user prediction history
+	- Monitor system usage
+
+10. PDF Report Generation
+	- Generate comprehensive PDF reports using ReportLab
+	- Include patient information, prediction results, and images
+	- Add recommendations and precautions
+	- Direct download functionality
+

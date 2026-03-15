@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Dashboard | UNISCAN AI</title>
+  <meta name="description" content="Admin dashboard for managing users and viewing all prediction history.">
+  <meta name="keywords" content="admin dashboard, UNISCAN AI, user management, prediction history">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/assets/css/main.css" rel="stylesheet">
+  <!-- Admin Dashboard CSS -->
+  <link href="../static/assets/css/admin.css" rel="stylesheet">
+
+</head>
+
+<body class="about-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/admin" class="logo d-flex align-items-center">
+        <h1 class="sitename">UNISCAN AI - Admin</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/admin" class="active">Dashboard<br></a></li>
+          <li><a href="/">Log Out</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../static/assets/img/contact-page-title-bg.jpg);">
+      <div class="container">
+        <h1>Admin Dashboard</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="/admin">Admin</a></li>
+            <li class="current">Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Statistics Section -->
+    <section id="stats" class="section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+              <h3>{{ total_users }}</h3>
+              <p><i class="bi bi-people me-2"></i>Total Users</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card info" data-aos="fade-up" data-aos-delay="200">
+              <h3>{{ total_predictions }}</h3>
+              <p><i class="bi bi-file-earmark-medical me-2"></i>Total Predictions</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card success" data-aos="fade-up" data-aos-delay="300">
+              <h3>{{ healthy_count }}</h3>
+              <p><i class="bi bi-check-circle me-2"></i>Healthy Cases</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card danger" data-aos="fade-up" data-aos-delay="400">
+              <h3>{{ tumor_count }}</h3>
+              <p><i class="bi bi-exclamation-triangle me-2"></i>Tumor Cases</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Users Section -->
+    <section id="users" class="section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>All Users</h2>
+          <p>Complete list of registered users in the system.</p>
+        </div>
+
+        <div class="table-container" data-aos="fade-up" data-aos-delay="100">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0 admin-users-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center" style="width: 60px;">#</th>
+                  <th scope="col"><i class="bi bi-person me-2"></i>Username</th>
+                  <th scope="col"><i class="bi bi-person-badge me-2"></i>Full Name</th>
+                  <th scope="col"><i class="bi bi-envelope me-2"></i>Email</th>
+                  <th scope="col"><i class="bi bi-phone me-2"></i>Mobile</th>
+                  <th scope="col" class="text-center" style="width: 150px;"><i class="bi bi-clock-history me-2"></i>History</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in users %}
+                <tr class="user-table-row">
+                  <th scope="row" class="text-center">{{ loop.index }}</th>
+                  <td>
+                    <a href="/admin/user/{{ user.username }}" class="user-link">
+                      <i class="bi bi-person-circle me-1"></i>{{ user.username }}
+                    </a>
+                  </td>
+                  <td>{{ user.name }}</td>
+                  <td>
+                    <a href="mailto:{{ user.email }}" class="text-decoration-none text-dark">
+                      <i class="bi bi-envelope me-1"></i>{{ user.email }}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="tel:{{ user.mobile }}" class="text-decoration-none text-dark">
+                      <i class="bi bi-telephone me-1"></i>{{ user.mobile }}
+                    </a>
+                  </td>
+                  <td class="text-center">
+                    <a href="/admin/user/{{ user.username }}" class="btn btn-sm btn-primary history-btn">
+                      <i class="bi bi-eye me-1"></i>View History
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% if not users %}
+                <tr>
+                  <td colspan="6" class="text-center text-muted py-5">
+                    <i class="bi bi-inbox display-4 d-block mb-3"></i>
+                    <p class="mb-0">No users found.</p>
+                  </td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+    <div class="container copyright text-center">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">UNISCAN AI</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">BootstrapMade</a> Distributed by <a href="#">ThemeWagon</a> Modified by <a href="#">Project Team</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+
+</body>
+
+</html>

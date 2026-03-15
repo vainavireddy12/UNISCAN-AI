@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Admin Dashboard | UNISCAN AI</title>
+    <meta name="description" content="Admin dashboard for managing users and viewing all prediction history.">
+    <meta name="keywords" content="admin dashboard, UNISCAN AI, user management, prediction history">
+  
+    <!-- Favicons -->
+    <link href="../static/assets/img/favicon.png" rel="icon">
+    <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+    <!-- Vendor CSS Files -->
+    <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+    <!-- Main CSS File -->
+    <link href="/static/assets/css/main.css" rel="stylesheet">
+    <!-- Admin Dashboard CSS -->
+    <link href="/static/assets/css/admin.css" rel="stylesheet">
+    <!-- Admin User History CSS -->
+    <link href="/static/assets/css/admin_user_history.css" rel="stylesheet">
+  
+  </head>
+
+<body class="about-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/admin" class="logo d-flex align-items-center">
+        <h1 class="sitename">UNISCAN AI - Admin</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/admin">Dashboard<br></a></li>
+          <li><a href="/">Log Out</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../static/assets/img/contact-page-title-bg.jpg);">
+      <div class="container">
+        <h1>User Prediction History</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/admin">Dashboard</a></li>
+            <li class="current">{{ user.username }}</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- User Info Section -->
+    <section id="user-info" class="section">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-lg-8">
+            <div class="card shadow-sm border-0 user-info-card">
+              <div class="card-body p-4">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h6 class="text-primary mb-2"><i class="bi bi-person me-2"></i>Username</h6>
+                    <p class="mb-0 fs-5"><strong>{{ user.username }}</strong></p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <h6 class="text-primary mb-2"><i class="bi bi-person-badge me-2"></i>Full Name</h6>
+                    <p class="mb-0 fs-5"><strong>{{ user.name }}</strong></p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <h6 class="text-primary mb-2"><i class="bi bi-envelope me-2"></i>Email</h6>
+                    <p class="mb-0">{{ user.email }}</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <h6 class="text-primary mb-2"><i class="bi bi-phone me-2"></i>Mobile</h6>
+                    <p class="mb-0">{{ user.mobile }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Predictions History Section -->
+    <section id="predictions" class="section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Prediction History</h2>
+          <p>Complete history of diagnostic predictions made by {{ user.name }}.</p>
+        </div>
+
+        {% if predictions %}
+        <div class="row gy-4">
+          {% for pred in predictions %}
+          <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+            <div class="card shadow-lg border-0 h-100 prediction-card">
+              <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-medical me-2"></i>Report #{{ pred.id }}</h5>
+                <small class="text-white-50">{{ pred.created_at }}</small>
+              </div>
+              <div class="card-body p-4">
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <div class="prediction-badge-container">
+                      <h6>Prediction</h6>
+                      <h4>
+                        {% if pred.prediction == 'Healthy' %}
+                        <span class="badge bg-success badge-prediction">{{ pred.prediction }}</span>
+                        {% else %}
+                        <span class="badge bg-danger badge-prediction">{{ pred.prediction }}</span>
+                        {% endif %}
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="prediction-badge-container">
+                      <h6>Confidence</h6>
+                      <h4 class="text-success">{{ pred.confidence }}%</h4>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-3 align-items-stretch">
+                  <div class="col-12">
+                    <div class="card border-0 shadow-sm h-100">
+                      <div class="prediction-image-container large">
+                        <a href="#" class="image-modal-trigger d-block w-100 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" data-image-src="{{ pred.fused }}" data-image-title="Fused CT-MRI Image - Report #{{ pred.id }}">
+                          <img src="{{ pred.fused }}" class="img-fluid rounded zoomable-image mx-auto d-block" alt="Fused Image">
+                        </a>
+                      </div>
+                      <div class="card-body p-2 text-center bg-light">
+                        <small class="text-muted"><i class="bi bi-zoom-in me-1"></i>Click to zoom - Fused CT-MRI Image</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card border-0 shadow-sm h-100">
+                      <div class="prediction-image-container small">
+                        <a href="#" class="image-modal-trigger d-block w-100 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" data-image-src="{{ pred.heatmap }}" data-image-title="Grad-CAM Heatmap - Report #{{ pred.id }}">
+                          <img src="{{ pred.heatmap }}" class="img-fluid rounded zoomable-image mx-auto d-block" alt="Heatmap">
+                        </a>
+                      </div>
+                      <div class="card-body p-2 text-center bg-light">
+                        <small class="text-muted"><i class="bi bi-zoom-in me-1"></i>Click to zoom - Heatmap</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card border-0 shadow-sm h-100">
+                      <div class="prediction-image-container small">
+                        <a href="#" class="image-modal-trigger d-block w-100 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" data-image-src="{{ pred.overlay }}" data-image-title="Overlay Visualization - Report #{{ pred.id }}">
+                          <img src="{{ pred.overlay }}" class="img-fluid rounded zoomable-image mx-auto d-block" alt="Overlay">
+                        </a>
+                      </div>
+                      <div class="card-body p-2 text-center bg-light">
+                        <small class="text-muted"><i class="bi bi-zoom-in me-1"></i>Click to zoom - Overlay</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted"><i class="bi bi-calendar me-1"></i>{{ pred.created_at }}</small>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+            <div class="card shadow-sm border-0">
+              <div class="card-body p-5">
+                <i class="bi bi-inbox display-1 text-muted mb-3"></i>
+                <h3 class="mb-3">No Predictions Found</h3>
+                <p class="text-muted mb-0">This user hasn't made any predictions yet.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+    <div class="container copyright text-center">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">UNISCAN AI</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">BootstrapMade</a> Distributed by <a href="#">ThemeWagon</a> Modified by <a href="#">Project Team</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Bootstrap Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="imageModalLabel">Image Viewer</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0 text-center bg-dark">
+          <img id="modalImage" src="" class="img-fluid" alt="Modal Image" style="max-width: 100%; max-height: 95vh; min-width: 600px; min-height: 500px; object-fit: contain; width: auto; height: auto;">
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="/static/assets/vendor/aos/aos.js"></script>
+  <script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="/static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/static/assets/js/main.js"></script>
+
+  <!-- Bootstrap Modal Image Handler -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all image modal triggers
+      const imageTriggers = document.querySelectorAll('.image-modal-trigger');
+      const modalImage = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('imageModalLabel');
+      const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+
+      // Add click event listeners to all triggers
+      imageTriggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Get image source and title from data attributes
+          const imageSrc = this.getAttribute('data-image-src');
+          const imageTitle = this.getAttribute('data-image-title');
+          
+          // Set modal image and title
+          if (modalImage) {
+            modalImage.src = imageSrc;
+            modalImage.alt = imageTitle;
+          }
+          
+          if (modalTitle) {
+            modalTitle.textContent = imageTitle;
+          }
+          
+          // Show the modal
+          imageModal.show();
+        });
+      });
+
+      // Clear image source when modal is hidden to prevent showing previous image
+      document.getElementById('imageModal').addEventListener('hidden.bs.modal', function() {
+        if (modalImage) {
+          modalImage.src = '';
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

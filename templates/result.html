@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Diagnostic Report Results | UNISCAN AI</title>
+  <meta name="description" content="Review unified diagnostic report results, AI model confidence scores, and comprehensive analysis from multi-modal medical images.">
+  <meta name="keywords" content="diagnostic report results, UNISCAN AI, multi-modal medical images, diagnostic analysis, CT scan, MRI, X-Ray">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/assets/css/main.css" rel="stylesheet">
+  <!-- Result Page CSS -->
+  <link href="../static/assets/css/result.css" rel="stylesheet">
+
+</head>
+
+<body class="about-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/home" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">UNISCAN AI</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/home">Prediction<br></a></li>
+          <li><a href="/history">History</a></li>
+          <li><a href="/graphs">Analytics</a></li>
+          <li><a href="../static/Notebook.html">Research</a></li>
+          <li><a href="/">Log Out</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../static/assets/img/contact-page-title-bg.jpg);">
+      <div class="container">
+        <h1>Unified Diagnostic Report Results</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="/home">Prediction</a></li>
+            <li class="current">Results</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Diagnostic Results Section -->
+    <section id="summary" class="about section">
+      <div class="container">
+        {% if prediction %}
+        <!-- Patient Information Card -->
+        {% if patient_name or age or gender or patient_id %}
+        <div class="row justify-content-center section-spacing" data-aos="fade-up" data-aos-delay="50">
+          <div class="col-lg-11 col-xl-10">
+            <div class="card shadow-sm border-0 mb-4">
+              <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-person-badge me-2"></i>Patient Information</h4>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  {% if patient_name %}
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-person me-2 text-primary"></i>
+                      <div>
+                        <small class="text-muted d-block">Patient Name</small>
+                        <strong>{{ patient_name }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if age %}
+                  <div class="col-md-3">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-calendar me-2 text-primary"></i>
+                      <div>
+                        <small class="text-muted d-block">Age</small>
+                        <strong>{{ age }} years</strong>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if gender %}
+                  <div class="col-md-3">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-gender-ambiguous me-2 text-primary"></i>
+                      <div>
+                        <small class="text-muted d-block">Gender</small>
+                        <strong>{{ gender }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if patient_id %}
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-card-text me-2 text-primary"></i>
+                      <div>
+                        <small class="text-muted d-block">Patient ID</small>
+                        <strong>{{ patient_id }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+        <!-- Prediction Result Card -->
+        <div class="row justify-content-center section-spacing" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-11 col-xl-10">
+            <div class="prediction-card-wrapper">
+              <div class="prediction-card">
+                <div class="prediction-header">
+                  <h2>Diagnostic Report</h2>
+                  <p class="subtitle">AI-Powered Multi-Modal Medical Image Analysis</p>
+                </div>
+                
+                <div class="prediction-result-box">
+                  <div class="prediction-label">Diagnosis Result</div>
+                  <div class="prediction-value">{{ prediction }}</div>
+                  
+                  <div class="confidence-section">
+                    <i class="bi bi-activity confidence-icon"></i>
+                    <div class="d-flex flex-column align-items-start">
+                      <span class="confidence-value">{{ confidence }}%</span>
+                      <span class="confidence-label">Confidence Score</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="alert prediction-info-alert mb-0" role="alert">
+                  <i class="bi bi-info-circle me-2"></i>
+                  <strong>Analysis Complete:</strong> The AI model has analyzed the multi-modal medical images and generated this diagnostic report. Please consult with a medical professional for clinical interpretation.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Analysis Results -->
+        <div class="section-title section-spacing" data-aos="fade-up" data-aos-delay="150">
+          <h2>Multi-Modal Image Analysis</h2>
+          <p>Detailed visualization of fused CT-MRI images, heatmap analysis, and overlay results.</p>
+        </div>
+
+        <div class="row gy-5 mb-5" data-aos="fade-up" data-aos-delay="200">
+          <!-- Fused Image -->
+          <div class="col-lg-4 col-md-12">
+            <div class="card h-100 shadow-lg border-0">
+              <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-layers me-2"></i>Fused CT-MRI Image</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="result-image-container">
+                  <img src="{{ fused }}" alt="Fused CT-MRI Image">
+                </div>
+              </div>
+              <div class="card-footer bg-light py-3">
+                <p class="mb-0 text-center"><small class="text-muted">Combined CT and MRI scan fusion for enhanced diagnostic clarity.</small></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Heatmap -->
+          <div class="col-lg-4 col-md-12">
+            <div class="card h-100 shadow-lg border-0">
+              <div class="card-header bg-danger text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-thermometer-half me-2"></i>Grad-CAM Heatmap</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="result-image-container">
+                  <img src="{{ heatmap }}" alt="Grad-CAM Heatmap">
+                </div>
+              </div>
+              <div class="card-footer bg-light py-3">
+                <p class="mb-0 text-center"><small class="text-muted">AI attention visualization highlighting regions of interest for diagnosis.</small></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Overlay -->
+          <div class="col-lg-4 col-md-12">
+            <div class="card h-100 shadow-lg border-0">
+              <div class="card-header bg-success text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Overlay Analysis</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="result-image-container">
+                  <img src="{{ overlay }}" alt="Overlay Analysis">
+                </div>
+              </div>
+              <div class="card-footer bg-light py-3">
+                <p class="mb-0 text-center"><small class="text-muted">Fused image with heatmap overlay showing diagnostic focus areas.</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Information Section -->
+        <div class="row section-spacing" data-aos="fade-up" data-aos-delay="250">
+          <div class="col-lg-12">
+            <div class="card shadow-sm border-0">
+              <div class="card-body p-4">
+                <h4 class="mb-4"><i class="bi bi-file-earmark-medical me-2"></i>Report Summary</h4>
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <div class="info-card text-primary bg-light rounded p-3">
+                      <h5 class="text-primary mb-2"><i class="bi bi-check-circle me-2"></i>Prediction</h5>
+                      <p class="mb-1 fs-5"><strong>{{ prediction }}</strong></p>
+                      <small class="text-muted">AI model classification result</small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card text-success bg-light rounded p-3">
+                      <h5 class="text-success mb-2"><i class="bi bi-graph-up me-2"></i>Confidence Level</h5>
+                      <p class="mb-1 fs-5"><strong>{{ confidence }}%</strong></p>
+                      <small class="text-muted">Model confidence in the prediction</small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card text-info bg-light rounded p-3">
+                      <h5 class="text-info mb-2"><i class="bi bi-image me-2"></i>Image Modalities</h5>
+                      <p class="mb-1 fs-5"><strong>CT Scan + MRI</strong></p>
+                      <small class="text-muted">Multi-modal fusion analysis</small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card text-warning bg-light rounded p-3">
+                      <h5 class="text-warning mb-2"><i class="bi bi-shield-check me-2"></i>Analysis Status</h5>
+                      <p class="mb-1 fs-5"><strong>Completed</strong></p>
+                      <small class="text-muted">All diagnostic processes finished</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendations and Precautions Section -->
+        <div class="row section-spacing" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-12">
+            {% if prediction == 'Healthy' %}
+            <div class="card shadow-sm border-0 border-start border-success border-4">
+              <div class="card-header bg-success bg-opacity-10">
+                <h4 class="mb-0 text-success"><i class="bi bi-check-circle-fill me-2"></i>Recommendations & Precautions</h4>
+              </div>
+              <div class="card-body p-4">
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <h5 class="text-success mb-3"><i class="bi bi-lightbulb me-2"></i>Recommendations</h5>
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Continue regular health monitoring and follow-up appointments</li>
+                      <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Maintain a healthy lifestyle with balanced diet and regular exercise</li>
+                      <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Schedule routine medical check-ups as recommended by your physician</li>
+                      <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Stay hydrated and get adequate rest</li>
+                      <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Keep a record of your medical history for future reference</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="text-warning mb-3"><i class="bi bi-shield-exclamation me-2"></i>Precautions</h5>
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Monitor for any new or unusual symptoms</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Consult a healthcare professional if you experience any changes</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Follow your doctor's advice regarding follow-up imaging if needed</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Maintain regular communication with your healthcare provider</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>This AI analysis is a screening tool and should not replace professional medical diagnosis</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="card shadow-sm border-0 border-start border-danger border-4">
+              <div class="card-header bg-danger bg-opacity-10">
+                <h4 class="mb-0 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Recommendations & Precautions</h4>
+              </div>
+              <div class="card-body p-4">
+                <div class="alert alert-danger" role="alert">
+                  <i class="bi bi-exclamation-circle me-2"></i>
+                  <strong>Important:</strong> This analysis indicates the presence of a tumor. Please consult with a qualified medical professional immediately for proper diagnosis and treatment planning.
+                </div>
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <h5 class="text-danger mb-3"><i class="bi bi-lightbulb me-2"></i>Immediate Recommendations</h5>
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="bi bi-arrow-right-circle text-danger me-2"></i><strong>Schedule an immediate consultation</strong> with a neurologist or oncologist</li>
+                      <li class="mb-2"><i class="bi bi-arrow-right-circle text-danger me-2"></i>Bring this report and all medical imaging to your appointment</li>
+                      <li class="mb-2"><i class="bi bi-arrow-right-circle text-danger me-2"></i>Discuss treatment options and next steps with your healthcare team</li>
+                      <li class="mb-2"><i class="bi bi-arrow-right-circle text-danger me-2"></i>Consider seeking a second opinion from a specialist</li>
+                      <li class="mb-2"><i class="bi bi-arrow-right-circle text-danger me-2"></i>Maintain all medical records and imaging studies</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="text-warning mb-3"><i class="bi bi-shield-exclamation me-2"></i>Important Precautions</h5>
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i><strong>Do not delay</strong> seeking professional medical attention</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>This AI analysis is a screening tool and requires clinical confirmation</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Avoid self-diagnosis or self-treatment</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Follow your doctor's recommendations for additional tests or procedures</li>
+                      <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Keep family members informed and seek emotional support if needed</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Generate Report Button -->
+        <div class="row section-spacing" data-aos="fade-up" data-aos-delay="350">
+          <div class="col-lg-12 text-center">
+            <div class="card shadow-lg border-0">
+              <div class="card-body p-5">
+                <h4 class="mb-4"><i class="bi bi-file-earmark-pdf me-2"></i>Generate Diagnostic Report</h4>
+                <p class="text-muted mb-4">Download a comprehensive PDF report containing all diagnostic details, images, and recommendations.</p>
+                {% if prediction_id %}
+                <a href="/generate-report?id={{ prediction_id }}" class="btn btn-primary btn-lg px-5 py-3" id="generateReportBtn">
+                  <i class="bi bi-download me-2"></i>Generate PDF Report
+                </a>
+                {% elif request.args.get('id') %}
+                <a href="/generate-report?id={{ request.args.get('id') }}" class="btn btn-primary btn-lg px-5 py-3" id="generateReportBtn">
+                  <i class="bi bi-download me-2"></i>Generate PDF Report
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        {% else %}
+        <!-- No Results -->
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+            <div class="alert alert-warning" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              <strong>No Results Available</strong>
+              <p class="mb-0 mt-2">Please upload medical images to generate a diagnostic report.</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </section><!-- /Diagnostic Results Section -->
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+    <div class="container copyright text-center">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">UNISCAN AI</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">BootstrapMade</a> Distributed by <a href="#">ThemeWagon</a> Modified by <a href="#">Project Team</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+
+</body>
+
+</html>

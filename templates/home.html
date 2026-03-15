@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>UNISCAN AI - Upload Multi-Modal Medical Images</title>
+  <meta name="description" content="Upload CT scans, MRI, X-Ray, or other medical images to generate unified diagnostic reports using UNISCAN AI.">
+  <meta name="keywords" content="UNISCAN AI, multi-modal medical images, CT scan, MRI, X-Ray, diagnostic report generator, medical imaging, AI healthcare">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/assets/css/main.css" rel="stylesheet">
+
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/home" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">UNISCAN AI</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/home" class="active">Prediction<br></a></li>
+          <li><a href="/history">History</a></li>
+          <li><a href="/graphs">Analytics</a></li>
+          <li><a href="../static/Notebook.html">Research</a></li>
+          <li><a href="/">Log Out</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="../static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-4">
+            <h1 data-aos="fade-up">UNISCAN AI - Unified Diagnostic Report Generator</h1>
+            <blockquote data-aos="fade-up" data-aos-delay="100">
+              <p>Upload CT scans, MRI, X-Ray, or other multi-modal medical images to generate comprehensive unified diagnostic reports using our advanced AI-powered framework with clinical-grade accuracy.</p>
+            </blockquote>
+            <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+              <a href="#why-us" class="btn-get-started">Upload Image</a>
+              <a href="/graphs" class="btn-watch-video d-flex align-items-center"><i class="bi bi-graph-up-arrow"></i><span>View Analytics</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Intake Form Section -->
+    <section id="why-us" class="why-us section dna-form-section">
+
+      <div class="container">
+        <div class="row gy-5 align-items-center">
+
+          <div class="col-xl-5" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="mb-3">Upload multi-modal medical images for analysis</h2>
+            <p class="mb-4">Upload CT scans, MRI, X-Ray, or other medical images to generate unified diagnostic reports with comprehensive analysis and high accuracy across multiple imaging modalities.</p>
+            <div class="dna-feature-list">
+              <span class="dna-badge"><i class="bi bi-image me-2"></i>CT & MRI support</span>
+              <span class="dna-badge"><i class="bi bi-cpu me-2"></i>Multi-modal processing</span>
+              <span class="dna-badge"><i class="bi bi-file-earmark-medical me-2"></i>Unified reports</span>
+              <span class="dna-badge"><i class="bi bi-shield-check me-2"></i>Clinical accuracy</span>
+            </div>
+          </div>
+
+          <div class="col-xl-7" data-aos="fade-up" data-aos-delay="200">
+            <div class="dna-form-card shadow-sm">
+              <form class="row g-3" method="POST" action="/predict" enctype="multipart/form-data">
+                {% if error %}
+                <div class="col-12">
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>{{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
+                {% endif %}
+                <div class="col-12">
+                  <h5 class="mb-3"><i class="bi bi-person-badge me-2"></i>Patient Information</h5>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="patient_name">Patient Name <span class="text-danger">*</span></label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="patient_name" name="patient_name" placeholder="Enter patient name" required>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label" for="age">Age <span class="text-danger">*</span></label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-calendar"></i></span>
+                    <input type="number" class="form-control" id="age" name="age" placeholder="Age" min="1" max="150" required>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label" for="gender">Gender <span class="text-danger">*</span></label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-gender-ambiguous"></i></span>
+                    <select class="form-select" id="gender" name="gender" required>
+                      <option value="">Select</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="patient_id">Patient ID</label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-card-text"></i></span>
+                    <input type="text" class="form-control" id="patient_id" name="patient_id" placeholder="Enter unique patient ID" required>
+                  </div>
+                  
+                </div>
+                <div class="col-12">
+                  <hr class="my-4">
+                  <h5 class="mb-3"><i class="bi bi-images me-2"></i>Medical Images</h5>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="ct_image">Upload CT Scan Image</label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-upload"></i></span>
+                    <input type="file" class="form-control" id="ct_image" name="ct" accept="image/*" required>
+                  </div>
+                  <div class="form-text">Upload CT scan image for multi-modal analysis.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="mri_image">Upload MRI Image</label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-upload"></i></span>
+                    <input type="file" class="form-control" id="mri_image" name="mri" accept="image/*" required>
+                  </div>
+                  <div class="form-text">Upload MRI image for multi-modal analysis.</div>
+                </div>
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                  <div class="form-text">Analysis completes in seconds.</div>
+                  <button type="submit" class="btn btn-primary btn-submit px-4">Generate Report</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section><!-- /Intake Form Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>UNISCAN AI Framework Features</h2>
+        <p>Advanced AI-powered unified diagnostic report generation from multi-modal medical images.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon flex-shrink-0"><i class="bi bi-file-earmark-medical" style="color: #f57813;"></i></div>
+            <div>
+              <h4 class="title">Multi-Modal Image Processing</h4>
+              <p class="description">Integrates advanced AI models to process CT scans, MRI, X-Ray, and other medical imaging modalities for unified diagnostic reports.</p>
+              
+            </div>
+          </div>
+          <!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon flex-shrink-0"><i class="bi bi-image" style="color: #15a04a;"></i></div>
+            <div>
+              <h4 class="title">CT & MRI Analysis</h4>
+              <p class="description">Advanced AI models analyze CT scans and MRI images to detect abnormalities and generate comprehensive diagnostic insights.</p>
+              
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon flex-shrink-0"><i class="bi bi-cpu" style="color: #d90769;"></i></div>
+            <div>
+              <h4 class="title">Multi-Modal Fusion</h4>
+              <p class="description">Fuse information from multiple imaging modalities using advanced AI networks for comprehensive diagnostic analysis.</p>
+              
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon flex-shrink-0"><i class="bi bi-shield-check" style="color: #15bfbc;"></i></div>
+            <div>
+              <h4 class="title">Clinical Validation</h4>
+              <p class="description">Models validated against expert radiologist annotations ensuring clinical-grade diagnostic accuracy.</p>
+              
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="500">
+            <div class="icon flex-shrink-0"><i class="bi bi-file-earmark-medical" style="color: #f5cf13;"></i></div>
+            <div>
+              <h4 class="title">Unified Diagnostic Reports</h4>
+              <p class="description">Generate comprehensive unified diagnostic reports with confidence scores, detected anomalies, and multi-modal analysis for clinical review.</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="600">
+            <div class="icon flex-shrink-0"><i class="bi bi-graph-up-arrow" style="color: #1335f5;"></i></div>
+            <div>
+              <h4 class="title">Performance Analytics</h4>
+              <p class="description">Track AI model performance metrics including accuracy, sensitivity, specificity, and F1 scores across multi-modal processing.</p>
+              
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Services Section -->
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+    <div class="container copyright text-center">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">UNISCAN AI</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        
+        Designed by <a href="#">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a> Modified by <a href="#">Project Team</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+
+</body>
+
+</html>
